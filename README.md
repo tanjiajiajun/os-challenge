@@ -4,6 +4,10 @@
 The OS Challenge is a group project that uses operating system concepts to optimize performance of a server for reverse hashing.
 The challenge consists of developing a server application in the C programming language, and using system calls to optimize and streamline the application's performance.
 
+## Preliminary Approach
+The version of the server used in the milestone had a multiprocesses model. Its operation was very basic. The parent process was responsible for establishing the connection with the client. Once this was done, with a while loop, it kept accepting the requests sent by the client. Once it accepted one, it created a child process (with ```fork()```). The child process would call the function in charge of doing all the processing of the request (parse the message, do the reverse hash, and send the message back to the client). Once the message was returned, the socket for that request was closed and the child process was killed.
+
+This implementation, while not performing well, was reliable. The main problems with this version were the overhead caused by the creation and destruction of child processes for each request received, plus the overhead of context switching from one process to another.
 ## Final Solution
 Our team conducted a series of experiments, with each team member contributing 1-2 experiments. After an in-depth examination of the experimental results, we collectively formulated a final solution incorporating several key features.
 
@@ -13,11 +17,6 @@ In order to prioritize tasks based on their urgency and importance, the system u
 
 To optimize memory management, a second-chance page replacement algorithm has been adopted. This algorithm involves maintaining an array of size 50, allowing for efficient handling of repeated hashes.
 
-
-## Preliminary Approach
-The version of the server used in the milestone had a multiprocesses model. Its operation was very basic. The parent process was responsible for establishing the connection with the client. Once this was done, with a while loop, it kept accepting the requests sent by the client. Once it accepted one, it created a child process (with ```fork()```). The child process would call the function in charge of doing all the processing of the request (parse the message, do the reverse hash, and send the message back to the client). Once the message was returned, the socket for that request was closed and the child process was killed.
-
-This implementation, while not performing well, was reliable. The main problems with this version were the overhead caused by the creation and destruction of child processes for each request received, plus the overhead of context switching from one process to another.
 
 ## Repository organization
 The experiments done by each of the team members can be found in the ``experiments_sxxxxxx`` directories.
